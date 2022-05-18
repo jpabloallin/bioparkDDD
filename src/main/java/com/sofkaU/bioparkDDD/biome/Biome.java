@@ -1,6 +1,7 @@
 package com.sofkaU.bioparkDDD.biome;
 
 import co.com.sofka.domain.generic.AggregateEvent;
+import com.sofkaU.bioparkDDD.biome.events.BiomeCreated;
 import com.sofkaU.bioparkDDD.biome.values.BiomeId;
 import com.sofkaU.bioparkDDD.biome.values.BiomeName;
 import com.sofkaU.bioparkDDD.biome.values.BiomeType;
@@ -17,5 +18,6 @@ public class Biome extends AggregateEvent<BiomeId> {
 
     public Biome(BiomeId entityId, BiomeName biomeName, BiomeType biomeType) {
         super(entityId);
+        appendChange(new BiomeCreated(biomeName, biomeType)).apply();
     }
 }
