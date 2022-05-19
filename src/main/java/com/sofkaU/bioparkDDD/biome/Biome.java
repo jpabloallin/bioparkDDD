@@ -1,9 +1,11 @@
 package com.sofkaU.bioparkDDD.biome;
 
 import co.com.sofka.domain.generic.AggregateEvent;
+import co.com.sofka.domain.generic.DomainEvent;
 import com.sofkaU.bioparkDDD.biome.events.*;
 import com.sofkaU.bioparkDDD.biome.values.*;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -16,6 +18,9 @@ public class Biome extends AggregateEvent<BiomeId> {
     protected Set<Instructor> instructors;
     protected Set<Veterinarian> veterinarians;
 
+    /**
+     * Creates aggregate Biome
+     * */
     public Biome(BiomeId entityId, BiomeName biomeName, BiomeType biomeType) {
         super(entityId);
         appendChange(new BiomeCreated(biomeName, biomeType)).apply();
@@ -28,6 +33,19 @@ public class Biome extends AggregateEvent<BiomeId> {
         subscribe(new BiomeChange(this));
     }
 
+    /**
+     * Factory that allows me to build the object Biome
+     * It's a way to obtain an aggregates with events that's already saved.
+     **/
+    public static Biome from(BiomeId entityId, List<DomainEvent> events) {
+        var biome = new Biome(entityId);
+        events.forEach(biome::applyEvent);
+        return biome;
+    }
+
+    /*
+    * Behaviors
+    */
     public void addAnimal(AnimalId entityId, Name name, Type type) {
         Objects.requireNonNull(entityId);
         Objects.requireNonNull(name);
@@ -81,21 +99,21 @@ public class Biome extends AggregateEvent<BiomeId> {
         appendChange(new VeterinarianYearsOfExperienceUpdated(entityId, yearsOfExperience)).apply();
     }
 
-    public Optional<Animal> getAnimalById(AnimalId entityId) {
+    protected Optional<Animal> getAnimalById(AnimalId entityId) {
         return animals()
                 .stream()
                 .filter(animal -> animal.identity().equals(entityId))
                 .findFirst();
     }
 
-    public Optional<Instructor> getInstructorById(InstructorId entityId) {
+    protected Optional<Instructor> getInstructorById(InstructorId entityId) {
         return instructors()
                 .stream()
                 .filter(instructor -> instructor.identity().equals(entityId))
                 .findFirst();
     }
 
-    public Optional<Veterinarian> getVeterinarianById(VeterinarianId entityId) {
+    protected Optional<Veterinarian> getVeterinarianById(VeterinarianId entityId) {
         return veterinarians()
                 .stream()
                 .filter(veterinarian -> veterinarian.identity().equals(entityId))

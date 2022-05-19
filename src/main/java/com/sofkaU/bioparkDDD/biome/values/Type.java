@@ -2,9 +2,33 @@ package com.sofkaU.bioparkDDD.biome.values;
 
 import co.com.sofka.domain.generic.ValueObject;
 
+import java.util.Objects;
+
 public class Type implements ValueObject<String> {
-    @Override
+    private final String value;
+    public Type(String value) {
+        this.value = Objects.requireNonNull(value);
+        if (this.value.isBlank()) {
+            throw new IllegalArgumentException("Type can not be empty");
+        }
+        if (this.value.length() <= 5) {
+            throw new IllegalArgumentException("Type must have more than 5 characters");
+        }
+    }
     public String value() {
-        return null;
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Type type = (Type) o;
+        return value.equals(type.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }
