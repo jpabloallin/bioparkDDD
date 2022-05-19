@@ -25,6 +25,7 @@ public class Animal extends Entity<AnimalId> {
     public void updateType(Type type) {
         this.type = Objects.requireNonNull(type);
     }
+
     public Name name() {
         return name;
     }
