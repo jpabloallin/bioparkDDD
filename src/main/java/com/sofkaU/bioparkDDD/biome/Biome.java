@@ -5,6 +5,7 @@ import com.sofkaU.bioparkDDD.biome.events.*;
 import com.sofkaU.bioparkDDD.biome.values.*;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 public class Biome extends AggregateEvent<BiomeId> {
@@ -71,5 +72,45 @@ public class Biome extends AggregateEvent<BiomeId> {
 
     public void updateVeterinarianYearsOfExperience(VeterinarianId entityId, YearsOfExperience yearsOfExperience) {
         appendChange(new VeterinarianYearsOfExperienceUpdated(entityId, yearsOfExperience)).apply();
+    }
+
+    public Optional<Animal> getAnimalById(AnimalId entityId) {
+        return animals()
+                .stream()
+                .filter(animal -> animal.identity().equals(entityId))
+                .findFirst();
+    }
+
+    public Optional<Instructor> getInstructorById(InstructorId entityId) {
+        return instructors()
+                .stream()
+                .filter(instructor -> instructor.identity().equals(entityId))
+                .findFirst();
+    }
+
+    public Optional<Veterinarian> getVeterinarianById(VeterinarianId entityId) {
+        return veterinarians()
+                .stream()
+                .filter(veterinarian -> veterinarian.identity().equals(entityId))
+                .findFirst();
+    }
+    public BiomeName biomeName() {
+        return biomeName;
+    }
+
+    public BiomeType biomeType() {
+        return biomeType;
+    }
+
+    public Set<Animal> animals() {
+        return animals;
+    }
+
+    public Set<Instructor> instructors() {
+        return instructors;
+    }
+
+    public Set<Veterinarian> veterinarians() {
+        return veterinarians;
     }
 }
