@@ -21,6 +21,13 @@ public class Biome extends AggregateEvent<BiomeId> {
         appendChange(new BiomeCreated(biomeName, biomeType)).apply();
     }
 
+    //Constructor privado para afectar estados, suscripción de los eventos
+    //Está pendiente de los eventos para poder cambiar los estados del agregado
+    private Biome(BiomeId entityId) {
+        super(entityId);
+        subscribe(new BiomeChange(this));
+    }
+
     public void addAnimal(AnimalId entityId, Name name, Type type) {
         Objects.requireNonNull(entityId);
         Objects.requireNonNull(name);
