@@ -49,4 +49,27 @@ public class Biome extends AggregateEvent<BiomeId> {
         appendChange(new BiomeTypeUpdated(biomeType)).apply();
     }
 
+    public void updateAnimalName(AnimalId entityId, Name name) {
+        appendChange(new AnimalNameUpdated(entityId, name)).apply();
+    }
+
+    public void updateAnimalType(AnimalId entityId, Type type) {
+        appendChange(new AnimalTypeUpdated(entityId, type)).apply();
+    }
+
+    public void updateInstructorName(InstructorId entityId, Name name) {
+        appendChange(new InstructorNameUpdated(entityId, name)).apply();
+    }
+
+    public void updateInstructorYearsOfExperience(InstructorId entityId, YearsOfExperience yearsOfExperience) {
+        appendChange(new InstructorYearsOfExperienceUpdated(entityId, yearsOfExperience)).apply();
+    }
+
+    public void updateVeterinarianName(VeterinarianId entityId, Name name) {
+        appendChange(new VeterinarianNameUpdated(entityId, name)).apply();
+    }
+
+    public void updateVeterinarianYearsOfExperience(VeterinarianId entityId, YearsOfExperience yearsOfExperience) {
+        appendChange(new VeterinarianYearsOfExperienceUpdated(entityId, yearsOfExperience)).apply();
+    }
 }
