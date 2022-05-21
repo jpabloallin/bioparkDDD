@@ -1,7 +1,7 @@
 package com.sofkaU.bioparkDDD.educator;
 
 import co.com.sofka.domain.generic.AggregateEvent;
-import com.sofkaU.bioparkDDD.educator.events.EducatorCreated;
+import com.sofkaU.bioparkDDD.educator.events.*;
 import com.sofkaU.bioparkDDD.educator.values.BiologistId;
 import com.sofkaU.bioparkDDD.educator.values.EducatorId;
 import com.sofkaU.bioparkDDD.educator.values.GuideId;
@@ -9,6 +9,7 @@ import com.sofkaU.bioparkDDD.educator.values.Name;
 import com.sofkaU.bioparkDDD.sharedvalueobjects.WorkArea;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 public class Educator extends AggregateEvent<EducatorId> {
@@ -36,8 +37,31 @@ public class Educator extends AggregateEvent<EducatorId> {
         Objects.requireNonNull(entityId);
         Objects.requireNonNull(name);
     }
-    public void updateGuideName(BiologistId entityId, Name name) {
+    public void updateGuideName(GuideId entityId, Name name) {
         appendChange(new GuideNameUpdated(entityId, name)).apply();
     }
 
+    protected Optional<Guide> getGuideById(GuideId entityId) {
+        return guides()
+                .stream()
+                .filter(guide -> guide.identity().equals(entityId))
+                .findFirst();
+    }
+    protected Optional<Biologist> getBiologistById(BiologistId entityId) {
+        return biologists()
+                .stream()
+                .filter(biologist -> biologist.identity().equals(entityId))
+                .findFirst();
+    }
+    public WorkArea workArea() {
+        return workArea;
+    }
+
+    public Set<Guide> guides() {
+        return guides;
+    }
+
+    public Set<Biologist> biologists() {
+        return biologists;
+    }
 }

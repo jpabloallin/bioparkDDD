@@ -2,14 +2,15 @@ package com.sofkaU.bioparkDDD.staff;
 
 import co.com.sofka.domain.generic.AggregateEvent;
 import com.sofkaU.bioparkDDD.educator.events.EducatorCreated;
-import com.sofkaU.bioparkDDD.educator.values.BiologistId;
 import com.sofkaU.bioparkDDD.sharedvalueobjects.WorkArea;
+import com.sofkaU.bioparkDDD.staff.events.*;
 import com.sofkaU.bioparkDDD.staff.values.KeeperId;
 import com.sofkaU.bioparkDDD.staff.values.MaintenanceOperatorId;
 import com.sofkaU.bioparkDDD.staff.values.Name;
 import com.sofkaU.bioparkDDD.staff.values.StaffId;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 public class Staff extends AggregateEvent<StaffId> {
@@ -39,5 +40,29 @@ public class Staff extends AggregateEvent<StaffId> {
     }
     public void updateMaintenanceOperatorName(MaintenanceOperatorId entityId, Name name) {
         appendChange(new MaintenanceOperatorNameUpdated(entityId, name)).apply();
+    }
+
+    protected Optional<Keeper> getKeeperById(KeeperId entityId) {
+        return keepers()
+                .stream()
+                .filter(keeper -> keeper.identity().equals(entityId))
+                .findFirst();
+    }
+    protected Optional<MaintenanceOperator> getMaintenanceOperatorById(MaintenanceOperatorId entityId) {
+        return maintenanceOperators()
+                .stream()
+                .filter(maintenanceOperator -> maintenanceOperator.identity().equals(entityId))
+                .findFirst();
+    }
+    public WorkArea workArea() {
+        return workArea;
+    }
+
+    public Set<Keeper> keepers() {
+        return keepers;
+    }
+
+    public Set<MaintenanceOperator> maintenanceOperators() {
+        return maintenanceOperators;
     }
 }
