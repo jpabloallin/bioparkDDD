@@ -22,6 +22,10 @@ public class Staff extends AggregateEvent<StaffId> {
         super(entityId);
         appendChange(new EducatorCreated(workArea)).apply();
     }
+    private Staff(StaffId entityId) {
+        super(entityId);
+        subscribe(new StaffChange(this));
+    }
     public void updateWorkArea(WorkArea workArea) {
         appendChange(new WorkAreaUpdated(workArea)).apply();
     }

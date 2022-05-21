@@ -21,6 +21,10 @@ public class Educator extends AggregateEvent<EducatorId> {
         super(entityId);
         appendChange(new EducatorCreated(workArea)).apply();
     }
+    private Educator(EducatorId entityId) {
+        super(entityId);
+        subscribe(new EducatorChange(this));
+    }
     public void updateWorkArea(WorkArea workArea) {
         appendChange(new WorkAreaUpdated(workArea)).apply();
     }
