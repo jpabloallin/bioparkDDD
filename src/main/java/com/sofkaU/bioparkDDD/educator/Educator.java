@@ -1,13 +1,17 @@
 package com.sofkaU.bioparkDDD.educator;
 
 import co.com.sofka.domain.generic.AggregateEvent;
+import co.com.sofka.domain.generic.DomainEvent;
 import com.sofkaU.bioparkDDD.educator.events.*;
 import com.sofkaU.bioparkDDD.educator.values.BiologistId;
 import com.sofkaU.bioparkDDD.educator.values.EducatorId;
 import com.sofkaU.bioparkDDD.educator.values.GuideId;
 import com.sofkaU.bioparkDDD.educator.values.Name;
 import com.sofkaU.bioparkDDD.sharedvalueobjects.WorkArea;
+import com.sofkaU.bioparkDDD.staff.Staff;
+import com.sofkaU.bioparkDDD.staff.values.StaffId;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -25,6 +29,15 @@ public class Educator extends AggregateEvent<EducatorId> {
         super(entityId);
         subscribe(new EducatorChange(this));
     }
+    /**
+     * Factory
+     **/
+    public static Educator from(EducatorId educatorId, List<DomainEvent> events) {
+        var educator = new Educator(educatorId);
+        events.forEach(educator::applyEvent);
+        return educator;
+    }
+
     public void updateWorkArea(WorkArea workArea) {
         appendChange(new WorkAreaUpdated(workArea)).apply();
     }

@@ -1,6 +1,7 @@
 package com.sofkaU.bioparkDDD.staff;
 
 import co.com.sofka.domain.generic.AggregateEvent;
+import co.com.sofka.domain.generic.DomainEvent;
 import com.sofkaU.bioparkDDD.educator.events.EducatorCreated;
 import com.sofkaU.bioparkDDD.sharedvalueobjects.WorkArea;
 import com.sofkaU.bioparkDDD.staff.events.*;
@@ -9,6 +10,7 @@ import com.sofkaU.bioparkDDD.staff.values.MaintenanceOperatorId;
 import com.sofkaU.bioparkDDD.staff.values.Name;
 import com.sofkaU.bioparkDDD.staff.values.StaffId;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -25,6 +27,14 @@ public class Staff extends AggregateEvent<StaffId> {
     private Staff(StaffId entityId) {
         super(entityId);
         subscribe(new StaffChange(this));
+    }
+    /**
+     * Factory
+     **/
+    public static Staff from(StaffId staffId, List<DomainEvent> events) {
+        var staff = new Staff(staffId);
+        events.forEach(staff::applyEvent);
+        return staff;
     }
     public void updateWorkArea(WorkArea workArea) {
         appendChange(new WorkAreaUpdated(workArea)).apply();
