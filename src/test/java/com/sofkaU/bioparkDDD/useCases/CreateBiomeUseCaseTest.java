@@ -28,7 +28,7 @@ class CreateBiomeUseCaseTest {
         var events = UseCaseHandler
                 .getInstance()
                 .syncExecutor(useCase, new RequestCommand<>(command))
-                .orElseThrow(()-> new IllegalArgumentException("Something went wront creating the biome"))
+                .orElseThrow(()-> new IllegalArgumentException("Something went wrong creating the biome"))
                 .getDomainEvents();
 
         //Assert

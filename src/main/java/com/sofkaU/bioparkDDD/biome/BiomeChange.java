@@ -33,6 +33,7 @@ public class BiomeChange extends EventChange {
             ));
         });
 
+        //faltan instructores y veterinarios
         apply((AnimalNameUpdated event) -> {
             var function = biome.getAnimalById(event.getEntityId())
                     .orElseThrow(() -> new IllegalArgumentException("Biome's animal was not found"));
