@@ -5,7 +5,7 @@ Biopark Domain Driven Design implementation
 
 Clone the repository with the command: 
 
-``git clone https://github.com/jpabloallin/medellinLabDDD.git``
+``git clone https://github.com/jpabloallin/bioparkDDD.git``
 
 ## Packages organization
 
