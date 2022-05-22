@@ -13,7 +13,7 @@ public class WorkArea implements ValueObject<String> {
             throw new IllegalArgumentException("Work area can not be empty");
         }
         if(this.value.length() < 3) {
-            throw new IllegalArgumentException("Name must have more than 3 characters");
+            throw new IllegalArgumentException("Work area must have more than 3 characters");
         }
     }
     public String value() {
