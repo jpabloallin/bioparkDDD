@@ -2,7 +2,6 @@ package com.sofkaU.bioparkDDD.staff;
 
 import co.com.sofka.domain.generic.AggregateEvent;
 import co.com.sofka.domain.generic.DomainEvent;
-import com.sofkaU.bioparkDDD.educator.events.EducatorCreated;
 import com.sofkaU.bioparkDDD.sharedvalueobjects.WorkArea;
 import com.sofkaU.bioparkDDD.staff.events.*;
 import com.sofkaU.bioparkDDD.staff.values.KeeperId;
@@ -22,7 +21,7 @@ public class Staff extends AggregateEvent<StaffId> {
 
     public Staff(StaffId entityId, WorkArea workArea) {
         super(entityId);
-        appendChange(new EducatorCreated(workArea)).apply();
+        appendChange(new StaffCreated(workArea)).apply();
     }
     private Staff(StaffId entityId) {
         super(entityId);
