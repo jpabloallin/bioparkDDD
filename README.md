@@ -9,7 +9,7 @@ Clone the repository with the command:
 
 ## Packages organization
 
-### Package com.sofkaU.medellinLabDDD.useCases:
+### Package: com.sofkaU.bioparkDDD
 
 **-biome**
 
